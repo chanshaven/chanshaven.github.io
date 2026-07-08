@@ -14,6 +14,8 @@ const postsCollection = defineCollection({
 		toc: z.boolean().optional().default(false),
 		tocDepth: z.tuple([z.number(), z.number()]).optional().default([2, 3]),
 
+		encryptedPayload: z.string().optional().default(""),
+
 		/* For internal use */
 		prevTitle: z.string().default(""),
 		prevSlug: z.string().default(""),
@@ -21,9 +23,11 @@ const postsCollection = defineCollection({
 		nextSlug: z.string().default(""),
 	}),
 });
+
 const specCollection = defineCollection({
 	schema: z.object({}),
 });
+
 export const collections = {
 	posts: postsCollection,
 	spec: specCollection,
