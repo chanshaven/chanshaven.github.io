@@ -2,6 +2,7 @@
 import path from "node:path";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
+import ChapterNav from "@components/ChapterNav.astro";
 import EncryptedPost from "@components/EncryptedPost.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
@@ -29,6 +30,17 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await entry.render();
+
+const allPosts = await getSortedPosts();
+
+const storyChapters = entry.data.series
+  ? allPosts.filter(
+      (post) =>
+        post.data.category === "Truyện" &&
+        post.data.series === entry.data.series &&
+        !post.data.draft
+    )
+  : [];
 
 // CHANGE THIS:
 // - Opt-in theo từng bài: mặc định false, bài nào cần thì toc: true
@@ -154,6 +166,10 @@ const jsonLd = {
         />
       )}
 
+      {entry.data.series && storyChapters.length > 0 && (
+        <ChapterNav currentSlug={entry.slug} chapters={storyChapters} />
+      )}
+
 
       <Markdown class="mb-6 markdown-content onload-animation">
         {showToc && tocHeadings.length > 0 && <ToCInline headings={tocHeadings} />}
@@ -164,6 +180,10 @@ const jsonLd = {
           <Content />
         )}
       </Markdown>
+
+      {entry.data.series && storyChapters.length > 0 && (
+        <ChapterNav currentSlug={entry.slug} chapters={storyChapters} />
+      )}
 
       {entry.data.comments !== false && <Giscus />}
 

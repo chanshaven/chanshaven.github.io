@@ -14,6 +14,10 @@ const postsCollection = defineCollection({
 		toc: z.boolean().optional().default(false),
 		tocDepth: z.tuple([z.number(), z.number()]).optional().default([2, 3]),
 
+		series: z.string().optional().default(""),
+		chapter: z.number().optional(),
+		chapterTitle: z.string().optional().default(""),
+
 		encryptedPayload: z.string().optional().default(""),
 
 		/* For internal use */
