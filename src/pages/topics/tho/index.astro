@@ -1,0 +1,13 @@
+---
+import ArchivePanel from "@components/ArchivePanel.svelte";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPostsList } from "@utils/content-utils";
+
+const posts = await getSortedPostsList();
+
+const filtered = posts.filter((p) => p.data?.category === "Thơ");
+---
+
+<MainGridLayout title="Thơ" description="Những bài thơ và mảnh cảm xúc nhỏ">
+  <ArchivePanel sortedPosts={filtered} client:only="svelte" />
+</MainGridLayout>

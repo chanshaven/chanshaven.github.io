@@ -8,8 +8,8 @@ import type {
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "Luvich",
-	subtitle: "Lăng kính thiểu năng",
+	title: "Chan's Haven",
+	subtitle: "Ngôi nhà nhỏ của Chan",
 	lang: "vi", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 345, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -17,7 +17,7 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "assets/images/bannertet.jpeg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "assets/images/cover.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: false, // Display the credit text of the banner image
@@ -44,35 +44,36 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 
-		{ name: "Toán học", url: "/topics/toan-hoc/" },
-		{ name: "Văn học", url: "/topics/van-hoc/" },
+		{ name: "Chúng ta", url: "/topics/chung-ta/" },
+		{ name: "Truyện", url: "/topics/truyen/" },
+		{ name: "Thơ", url: "/topics/tho/" },
 
 		LinkPreset.About,
 	],
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-	name: "Luvich",
-	bio: "Nhìn đời qua lăng kính thiểu năng",
+	avatar: "assets/images/avt.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	name: "Chan",
+	bio: "Góc nhỏ để viết những điều dịu dàng",
 	links: [
-		{
-			name: "Facebook",
-			icon: "fa6-brands:facebook", // Visit https://icones.js.org/ for icon codes
-			// You will need to install the corresponding icon set if it's not already included
-			// `pnpm add @iconify-json/<icon-set-name>`
-			url: "https://facebook.com/hoathekiet",
-		},
-		{
-			name: "Instagram",
-			icon: "fa6-brands:instagram",
-			url: "https://instagram.com/hoathekiet",
-		},
-		{
-			name: "Wordpress",
-			icon: "fa6-brands:wordpress",
-			url: "https://hoathekiet.wordpress.com",
-		},
+		// {
+		// 	name: "Facebook",
+		// 	icon: "fa6-brands:facebook", // Visit https://icones.js.org/ for icon codes
+		// 	// You will need to install the corresponding icon set if it's not already included
+		// 	// `pnpm add @iconify-json/<icon-set-name>`
+		// 	url: "https://facebook.com/hoathekiet",
+		// },
+		// {
+		// 	name: "Instagram",
+		// 	icon: "fa6-brands:instagram",
+		// 	url: "https://instagram.com/hoathekiet",
+		// },
+		// {
+		// 	name: "Wordpress",
+		// 	icon: "fa6-brands:wordpress",
+		// 	url: "https://hoathekiet.wordpress.com",
+		// },
 		// {
 		// 	name: "GitHub",
 		// 	icon: "fa6-brands:github",
