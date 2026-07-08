@@ -1,0 +1,19 @@
+---
+import ArchivePanel from "@components/ArchivePanel.svelte";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPostsList } from "@utils/content-utils";
+
+const posts = await getSortedPostsList();
+
+// lọc theo category
+const filtered = posts.filter((p) => p.data?.category === "Tensor");
+
+// (tuỳ chọn) debug nhanh:
+console.log("posts:", posts.length);
+console.log("filtered:", filtered.length);
+console.log("all categories:", [...new Set(posts.map(p => p.data?.category))]);
+---
+
+<MainGridLayout title="Toán học" description="Các bài viết về Toán học">
+  <ArchivePanel sortedPosts={filtered} client:only="svelte" />
+</MainGridLayout>

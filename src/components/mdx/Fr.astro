@@ -1,0 +1,10 @@
+<div class="col col-fr">
+  <div class="col-label">FR</div>
+  <div class="col-body"><slot /></div>
+</div>
+
+<style>
+  .col { border: 1px solid var(--line-divider); border-radius: 12px; overflow: hidden; }
+  .col-label { font-weight: 700; font-size: 0.8rem; padding: .5rem .75rem; background: var(--btn-regular-bg); }
+  .col-body { padding: .75rem .9rem; }
+</style>

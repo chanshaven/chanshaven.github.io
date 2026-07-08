@@ -1,0 +1,107 @@
+---
+import type { MarkdownHeading } from "astro";
+
+type TocNode = MarkdownHeading & { children: TocNode[] };
+
+type Props = {
+  headings?: MarkdownHeading[]; // dùng khi variant="nav"
+  items?: TocNode[];            // dùng khi variant="list"
+  title?: string;
+  variant?: "nav" | "list";
+};
+
+const {
+  headings = [],
+  items = [],
+  title = "Mục lục",
+  variant = "nav",
+} = Astro.props as Props;
+
+const cleanHeadingText = (t: string) => t.replace(/\s*#+\s*$/, "");
+
+function buildTree(list: MarkdownHeading[]) {
+  const root: TocNode[] = [];
+  const stack: TocNode[] = [];
+
+  for (const h of list) {
+    const node: TocNode = { ...h, children: [] };
+
+    while (stack.length && h.depth <= stack[stack.length - 1].depth) stack.pop();
+    if (stack.length === 0) root.push(node);
+    else stack[stack.length - 1].children.push(node);
+
+    stack.push(node);
+  }
+
+  return root;
+}
+
+const tree: TocNode[] = variant === "nav" ? buildTree(headings) : items;
+---
+
+{variant === "nav" ? (
+  <nav class="toc-inline" aria-label="Table of contents">
+    <div class="toc-inline__title">{title}</div>
+    <Astro.self variant="list" items={tree} />
+  </nav>
+) : (
+  <ol class="toc-inline__list">
+    {tree.map((n) => (
+      <li class="toc-inline__item">
+        <a href={`#${n.slug}`}>{cleanHeadingText(n.text)}</a>
+        {n.children.length > 0 ? (
+          <Astro.self variant="list" items={n.children} />
+        ) : null}
+      </li>
+    ))}
+  </ol>
+)}
+
+<style>
+  .toc-inline {
+    padding: 1rem;
+    border: 1px solid var(--line-divider);
+    border-radius: 0.75rem;
+  }
+
+  .toc-inline__title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Nested counters: 1, 1.1, 1.1.1... */
+  .toc-inline__list {
+    counter-reset: item;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  .toc-inline__item {
+    counter-increment: item;
+    margin: 0.35rem 0;
+    position: relative;
+    padding-left: 3rem; /* chừa chỗ cho cột số */
+  }
+
+  .toc-inline__item::before {
+    content: counters(item, ".") ".";
+    position: absolute;
+    left: 0;
+    width: 2.5rem;
+    text-align: right;
+    opacity: 0.7;
+  }
+
+  /* sub-list nằm dưới phần text */
+  .toc-inline__item > .toc-inline__list {
+    margin-top: 0.25rem;
+  }
+
+  .toc-inline a {
+    text-decoration: none;
+  }
+  .toc-inline a:hover {
+    text-decoration: underline;
+  }
+</style>

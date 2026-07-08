@@ -1,0 +1,30 @@
+---
+const { title = "Hint", open = false } = Astro.props;
+---
+
+<details class="mdx-hint" {...(open ? { open: true } : {})}>
+  <summary class="mdx-hint-summary">{title}</summary>
+  <div class="mdx-hint-body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  details.mdx-hint {
+    border: 1px solid var(--line-divider);
+    border-radius: 12px;
+    background: var(--card-bg, transparent);
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .mdx-hint-summary {
+    cursor: pointer;
+    padding: .75rem .9rem;
+    font-weight: 700;
+    background: var(--btn-regular-bg);
+    user-select: none;
+  }
+  .mdx-hint-body {
+    padding: .75rem .9rem;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+const { reverseOnMobile = false } = Astro.props;
+---
+
+<div class:list={[
+  "twocol",
+  reverseOnMobile ? "twocol-reverse" : "",
+]}>
+  <slot />
+</div>
+
+<style>
+  .twocol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+    margin: 1rem 0;
+  }
+  @media (max-width: 900px) {
+    .twocol {
+      grid-template-columns: 1fr;
+    }
+    .twocol-reverse {
+      direction: rtl;
+    }
+    .twocol-reverse > * {
+      direction: ltr;
+    }
+  }
+</style>
