@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Luvich</title>
+    <style>
+      body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;max-width:720px;margin:64px auto;padding:0 16px;line-height:1.6}
+      a{color:#0b57d0;text-decoration:none} a:hover{text-decoration:underline}
+      .card{border:1px solid #ddd;border-radius:12px;padding:16px;margin:12px 0}
+    </style>
+  </head>
+  <body>
+    <h1>👋 Xin chào, mình là Luvich</h1>
+    <p>Đây là trang chủ (GitHub Pages). Từ đây mình sẽ link tới các trang khác: thơ, sách, toán...</p>
+
+    <div class="card">
+      <h2>🌿 Các trang</h2>
+      <ul>
+        <li><a href="https://github.com/luvich">GitHub profile</a></li>
+        <!-- Sau này bạn tạo các repo con thì thêm link kiểu:
+        <li><a href="/tho/">Thơ</a></li>
+        <li><a href="/sach/">Sách</a></li>
+        -->
+      </ul>
+    </div>
+
+    <p style="opacity:.7">Last updated: <span id="t"></span></p>
+    <script>document.getElementById("t").textContent=new Date().toLocaleString()</script>
+  </body>
+</html>
