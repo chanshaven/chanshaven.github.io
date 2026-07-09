@@ -248,3 +248,32 @@ const currentLabel = current?.data.chapter
 		}
 	}
 </style>
+
+
+<script>
+	function initChapterNavAutoScroll() {
+		document.querySelectorAll(".chapter-dropdown").forEach((dropdown) => {
+			if (dropdown.dataset.autoScrollReady === "true") return;
+			dropdown.dataset.autoScrollReady = "true";
+
+			dropdown.addEventListener("toggle", () => {
+				if (!dropdown.open) return;
+
+				requestAnimationFrame(() => {
+					const list = dropdown.querySelector(".chapter-list");
+					const active = dropdown.querySelector(".chapter-list-item.active");
+
+					if (!list || !active) return;
+
+					list.scrollTop =
+						active.offsetTop -
+						list.clientHeight / 2 +
+						active.clientHeight / 2;
+				});
+			});
+		});
+	}
+
+	document.addEventListener("astro:page-load", initChapterNavAutoScroll);
+	initChapterNavAutoScroll();
+</script>
