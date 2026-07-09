@@ -17,6 +17,7 @@ import PostMetadata from "../../components/PostMeta.astro";
 import Giscus from "../../components/misc/Giscus.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import MessageBox from "@components/MessageBox.astro";
 
 
 
@@ -184,6 +185,8 @@ const jsonLd = {
       {entry.data.series && storyChapters.length > 0 && (
         <ChapterNav currentSlug={entry.slug} chapters={storyChapters} />
       )}
+
+      <MessageBox postTitle={entry.data.title} />
 
       {entry.data.comments !== false && <Giscus />}
 

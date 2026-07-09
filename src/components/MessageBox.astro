@@ -1,0 +1,88 @@
+---
+interface Props {
+	postTitle?: string;
+}
+
+const { postTitle = "" } = Astro.props;
+
+const tallyUrl =
+	"https://tally.so/embed/yPkOx6?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
+---
+
+<section class="message-box">
+	<div class="message-box-header">
+		<div class="message-box-kicker">♡ Gửi lời yêu thương cho Chan ♡</div>
+		<p>
+			Nếu bài viết này chạm vào bạn một chút, cứ để lại vài dòng nhé.
+			Chan sẽ đọc thật chậm.
+		</p>
+	</div>
+
+	<iframe
+		data-tally-src={tallyUrl}
+		loading="lazy"
+		width="100%"
+		height="560"
+		frameborder="0"
+		marginheight="0"
+		marginwidth="0"
+		title={`Gửi lời nhắn cho Chan - ${postTitle}`}
+	></iframe>
+</section>
+
+<script is:inline src="https://tally.so/widgets/embed.js"></script>
+
+<style>
+	.message-box {
+		margin: 2rem 0;
+		padding: 1.4rem;
+		border-radius: 1.75rem;
+		border: 1px solid rgba(216, 106, 169, 0.18);
+		background:
+			radial-gradient(circle at top left, rgba(255, 210, 232, 0.75), transparent 34%),
+			linear-gradient(135deg, rgba(255, 250, 253, 0.98), rgba(255, 238, 247, 0.82));
+		box-shadow: 0 18px 45px rgba(216, 106, 169, 0.08);
+		overflow: hidden;
+	}
+
+	.message-box-header {
+		margin-bottom: 1rem;
+	}
+
+	.message-box-kicker {
+		width: fit-content;
+		margin-bottom: 0.6rem;
+		border-radius: 999px;
+		padding: 0.35rem 0.75rem;
+		background: rgba(216, 106, 169, 0.1);
+		color: #d86aa9;
+		font-size: 0.85rem;
+		font-weight: 800;
+	}
+
+	.message-box h2 {
+		margin: 0 0 0.55rem;
+		color: #d86aa9;
+		font-size: 1.45rem;
+		font-weight: 850;
+	}
+
+	.message-box p {
+		margin: 0;
+		color: rgba(60, 50, 60, 0.72);
+		line-height: 1.7;
+	}
+
+	.message-box iframe {
+		border: none;
+		border-radius: 1.25rem;
+		background: transparent;
+	}
+
+	@media (max-width: 640px) {
+		.message-box {
+			padding: 1.1rem;
+			border-radius: 1.4rem;
+		}
+	}
+</style>
