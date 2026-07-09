@@ -247,14 +247,14 @@
 .custom-md,
 .markdown-content {
     font-size: 1.18rem !important;
-    line-height: 2.15 !important;
+    line-height: 2.02 !important;
 }
 
 .custom-md p,
 .markdown-content p {
     font-size: inherit !important;
     line-height: inherit !important;
-    margin: 1.25em 0;
+    margin: 1.15em 0;
 }
 
 @media (max-width: 640px) {
@@ -262,6 +262,6 @@
     .custom-md,
     .markdown-content {
         font-size: 1.2rem !important;
-        line-height: 2.18 !important;
+        line-height: 2.02 !important;
     }
 }
