@@ -272,6 +272,25 @@ const currentLabel = current?.data.chapter
 				});
 			});
 		});
+
+		if (document.documentElement.dataset.chapterOutsideClickReady === "true") return;
+		document.documentElement.dataset.chapterOutsideClickReady = "true";
+
+		document.addEventListener("click", (event) => {
+			document.querySelectorAll(".chapter-dropdown[open]").forEach((dropdown) => {
+				if (!dropdown.contains(event.target)) {
+					dropdown.removeAttribute("open");
+				}
+			});
+		});
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key !== "Escape") return;
+
+			document.querySelectorAll(".chapter-dropdown[open]").forEach((dropdown) => {
+				dropdown.removeAttribute("open");
+			});
+		});
 	}
 
 	document.addEventListener("astro:page-load", initChapterNavAutoScroll);
