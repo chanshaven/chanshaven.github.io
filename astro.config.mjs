@@ -28,7 +28,7 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://luvich.github.io/",
+	site: "https://chanshaven.github.io/",
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
