@@ -270,3 +270,30 @@
         margin: 0.82em 0;
     }
 }
+
+
+.custom-md .poem {
+    width: fit-content;
+    max-width: 100%;
+    margin: 2rem auto;
+    font-size: 1.12rem;
+    line-height: 2.05;
+    color: var(--deep-text);
+}
+
+.custom-md .poem p {
+    margin: 1.45em 0;
+}
+
+@media (max-width: 640px) {
+    .custom-md .poem {
+        width: 100%;
+        margin: 1.5rem 0;
+        font-size: 1.12rem;
+        line-height: 1.95;
+    }
+
+    .custom-md .poem p {
+        margin: 1.25em 0;
+    }
+}
