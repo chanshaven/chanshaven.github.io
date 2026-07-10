@@ -47,27 +47,40 @@ const currentLabel = current?.data.chapter
 			</summary>
 
 			<div class="chapter-list">
-				<div class="chapter-list-title">Danh sách chương</div>
+	            <div class="chapter-list-title">Danh sách chương</div>
 
-				{sortedChapters.map((post) => {
-					const isCurrent = post.slug === currentSlug;
-					const label = post.data.chapter
-						? `Chương ${post.data.chapter}`
-						: post.data.title;
+                <div class="chapter-search">
+                    <input
+                        class="chapter-search-input"
+                        type="search"
+                        placeholder="Tìm chương, ví dụ: 6 hoặc hồ..."
+                        autocomplete="off"
+                    />
+                </div>
 
-					return (
-						<a
-							href={getPostUrlBySlug(post.slug)}
-							class:list={["chapter-list-item", { active: isCurrent }]}
-						>
-							<span class="chapter-list-number">{label}</span>
-							<span class="chapter-list-name">
-								{post.data.chapterTitle || post.data.title}
-							</span>
-						</a>
-					);
-				})}
-			</div>
+                {sortedChapters.map((post) => {
+                    const isCurrent = post.slug === currentSlug;
+                    const label = post.data.chapter
+                        ? `Chương ${post.data.chapter}`
+                        : post.data.title;
+
+                    const chapterName = post.data.chapterTitle || post.data.title;
+
+                    return (
+                        <a
+                            href={getPostUrlBySlug(post.slug)}
+                            data-chapter={post.data.chapter ?? ""}
+                            data-search={`${label} ${chapterName}`.toLowerCase()}
+                            class:list={["chapter-list-item", { active: isCurrent }]}
+                        >
+                            <span class="chapter-list-number">{label}</span>
+                            <span class="chapter-list-name">
+                                {chapterName}
+                            </span>
+                        </a>
+                    );
+                })}
+            </div>
 		</details>
 
 		<a
@@ -247,6 +260,40 @@ const currentLabel = current?.data.chapter
 			width: 100%;
 		}
 	}
+
+    .chapter-search {
+	position: sticky;
+	top: 2.95rem;
+	z-index: 2;
+	margin: 0 -0.75rem 0.55rem;
+	padding: 0.65rem 0.75rem;
+	background: rgba(255, 250, 253, 0.98);
+	border-bottom: 1px dashed rgba(216, 106, 169, 0.16);
+    }
+
+    .chapter-search-input {
+        width: 100%;
+        border: 1px solid rgba(216, 106, 169, 0.2);
+        border-radius: 0.9rem;
+        padding: 0.7rem 0.85rem;
+        background: rgba(255, 255, 255, 0.78);
+        color: #6b5967;
+        font-weight: 650;
+        outline: none;
+    }
+
+    .chapter-search-input::placeholder {
+        color: rgba(107, 89, 103, 0.48);
+    }
+
+    .chapter-search-input:focus {
+        border-color: rgba(216, 106, 169, 0.6);
+        box-shadow: 0 0 0 4px rgba(255, 185, 215, 0.22);
+    }
+
+    .chapter-list-item[hidden] {
+        display: none;
+    }
 </style>
 
 
@@ -256,20 +303,73 @@ const currentLabel = current?.data.chapter
 			if (dropdown.dataset.autoScrollReady === "true") return;
 			dropdown.dataset.autoScrollReady = "true";
 
+			const input = dropdown.querySelector(".chapter-search-input");
+			const list = dropdown.querySelector(".chapter-list");
+
+			function filterChapters() {
+				const q = input?.value?.trim().toLowerCase() || "";
+				const items = dropdown.querySelectorAll(".chapter-list-item");
+
+				let firstVisible = null;
+
+				items.forEach((item) => {
+					const chapter = item.dataset.chapter || "";
+					const searchText = item.dataset.search || "";
+
+					const matched =
+						!q ||
+						chapter === q ||
+						chapter.startsWith(q) ||
+						searchText.includes(q);
+
+					item.hidden = !matched;
+
+					if (matched && !firstVisible) {
+						firstVisible = item;
+					}
+				});
+
+				return firstVisible;
+			}
+
 			dropdown.addEventListener("toggle", () => {
 				if (!dropdown.open) return;
 
 				requestAnimationFrame(() => {
-					const list = dropdown.querySelector(".chapter-list");
 					const active = dropdown.querySelector(".chapter-list-item.active");
 
-					if (!list || !active) return;
+					if (list && active) {
+						list.scrollTop =
+							active.offsetTop -
+							list.clientHeight / 2 +
+							active.clientHeight / 2;
+					}
 
-					list.scrollTop =
-						active.offsetTop -
-						list.clientHeight / 2 +
-						active.clientHeight / 2;
+					if (input) {
+						input.value = "";
+						filterChapters();
+
+						// Tự focus trên desktop, tránh mobile tự bật bàn phím quá đột ngột
+						if (window.innerWidth > 700) {
+							input.focus();
+						}
+					}
 				});
+			});
+
+			input?.addEventListener("input", () => {
+				filterChapters();
+			});
+
+			input?.addEventListener("keydown", (event) => {
+				if (event.key !== "Enter") return;
+
+				const firstVisible = filterChapters();
+
+				if (firstVisible) {
+					event.preventDefault();
+					firstVisible.click();
+				}
 			});
 		});
 
