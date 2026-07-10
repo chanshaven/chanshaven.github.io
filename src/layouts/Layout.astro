@@ -76,6 +76,7 @@ const bannerOffset =
 <html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]"
 	  data-overlayscrollbars-initialize
 >
+		
 	<head>
 
 		<title>{pageTitle}</title>
@@ -108,6 +109,14 @@ const bannerOffset =
 				  media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
 			/>
 		))}
+
+		<!-- Cloudflare Web Analytics -->
+		<script
+			type="module"
+			src="https://static.cloudflareinsights.com/beacon.min.js"
+			data-cf-beacon='{"token": "7b2968c461ba437da0b169b624c04baf"}'
+		></script>
+		<!-- End Cloudflare Web Analytics -->
 
 		<!-- Set the theme before the page is rendered to avoid a flash -->
 		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, PAGE_WIDTH, configHue}}>
